@@ -1,0 +1,28 @@
+# Zenamaze — robots policy
+# Public marketing + legal pages are crawlable; the authenticated app is not.
+User-agent: *
+Allow: /$
+Allow: /login
+Allow: /privacy
+Allow: /terms
+Allow: /data-deletion
+Allow: /contact
+Allow: /about
+Allow: /help
+Allow: /disclaimer
+Allow: /cookies
+
+# Authenticated / per-user app surfaces — no SEO value, keep out of the index.
+Disallow: /dashboard
+Disallow: /tasks
+Disallow: /reminders
+Disallow: /notes
+Disallow: /progress
+Disallow: /new
+Disallow: /profile
+Disallow: /plan/
+Disallow: /goal/
+Disallow: /onboarding/
+Disallow: /try/
+
+Sitemap: https://zenamaze.knocdoc.in/sitemap.xml

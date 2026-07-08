@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+
+body {
+  @apply bg-ink-950 text-slate-200 font-sans antialiased;
+  position: relative;
+  overflow-x: hidden;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'salt';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Aurora gradient field — the aspirational backdrop. Kept STATIC on purpose:
+   an animated backdrop forces every backdrop-blur surface (all the glass cards)
+   to re-sample and repaint its blur on every frame, even when idle — the single
+   biggest source of scroll/idle jank. Static gradient, same look, no repaint. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -30% -10% -10% -10%;
+  z-index: -2;
+  background:
+    radial-gradient(45rem 45rem at 12% 8%, rgba(124, 92, 255, 0.30), transparent 60%),
+    radial-gradient(40rem 40rem at 88% 0%, rgba(255, 61, 129, 0.18), transparent 55%),
+    radial-gradient(50rem 50rem at 70% 90%, rgba(56, 132, 255, 0.20), transparent 60%),
+    radial-gradient(35rem 35rem at 20% 100%, rgba(232, 182, 76, 0.10), transparent 55%);
+  filter: saturate(1.1);
+}
+
+/* Fine grid + grain overlay for depth. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans text-white;
+    text-wrap: balance;
+  }
+
+  h1 { @apply text-display-xl md:text-display-2xl; }
+  h2 { @apply text-display md:text-display-lg; }
+  h3 { @apply text-heading-xl; }
+  h4 { @apply text-heading-lg; }
+
+  p { @apply text-body text-slate-200; }
+
+  a {
+    @apply text-accent-soft transition-colors;
+    &:hover { @apply text-accent; }
+  }
+
+  input, textarea, select {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  /* Glassmorphism surfaces */
+  /* backdrop-blur-lg (16px) instead of 2xl (40px): a large blur radius is paid
+     per blurred pixel per repaint, and these surfaces are numerous. 16px reads
+     as glass at a fraction of the GPU cost. */
+  .glass {
+    @apply rounded-3xl border border-white/[0.12] bg-white/[0.06] backdrop-blur-lg;
+    box-shadow:
+      0 10px 40px -12px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+  .glass-strong {
+    @apply rounded-3xl border border-white/[0.12] bg-white/[0.10] backdrop-blur-lg;
+    box-shadow:
+      0 20px 60px -18px rgba(0, 0, 0, 0.8),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.10);
+  }
+  .card { @apply glass; }
+
+  /* Gradient text for headlines */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #ffffff 0%, #c9bfff 45%, #ff8fb1 100%);
+  }
+  .accent-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #9b83ff, #ff6aa2);
+  }
+  .gradient-amber {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #e8b64c, #ff7a45);
+  }
+
+  /* Display serif for aspirational hero quotes */
+  .serif-display {
+    @apply font-display text-white;
+    font-feature-settings: 'liga' 1, 'dlig' 1;
+  }
+
+  /* Monospace numbers for stats / data */
+  .tabular-nums {
+    font-feature-settings: 'tnum' 1;
+    @apply font-mono;
+  }
+  .stat-number {
+    @apply font-mono tabular-nums;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-semibold text-sm tracking-wide transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn text-white;
+    background-image: linear-gradient(135deg, #7c5cff 0%, #6d4dff 50%, #b64dff 100%);
+    box-shadow: 0 10px 30px -8px rgba(124, 92, 255, 0.6), inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .btn-primary:hover { @apply -translate-y-0.5; box-shadow: 0 16px 40px -8px rgba(124, 92, 255, 0.7), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .btn-ghost {
+    @apply btn border border-white/20 bg-white/[0.08] text-white hover:bg-white/[0.12] backdrop-blur-xl;
+  }
+
+  .input {
+    @apply w-full rounded-2xl border border-white/[0.12] bg-white/[0.06] px-4 py-3.5 text-white placeholder:text-slate-400 outline-none backdrop-blur-xl transition;
+    @apply focus:border-accent/60 focus:ring-2 focus:ring-accent/25 focus:bg-white/[0.10];
+  }
+  .label { @apply block text-body-sm font-medium text-slate-300 mb-1.5; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/[0.15] bg-white/[0.08] px-3 py-1 text-caption font-medium text-slate-200 backdrop-blur;
+  }
+}
+
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { @apply bg-white/10 rounded-full; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Skeleton shimmer — a soft sweep across glass cards */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.04) 20%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.02) 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+  will-change: background-position;
+}
+
+.skeleton-block {
+  @apply rounded-2xl skeleton-shimmer;
+}
+
+/* ═══════════════════════════════════════════════════
+   LIGHT MODE
+   Toggle via <html class="light-mode">
+   ═══════════════════════════════════════════════════ */
+.light-mode {
+  /* ── Tailwind text color overrides ── */
+  --tw-text-opacity: 1 !important;
+
+  .text-white { color: #1c1917 !important; }
+  .text-slate-100 { color: #292524 !important; }
+  .text-slate-200 { color: #44403c !important; }
+  .text-slate-300 { color: #57534e !important; }
+  .text-slate-400 { color: #78716c !important; }
+  .text-slate-500 { color: #a8a29e !important; }
+  .text-slate-600 { color: #d6d3d1 !important; }
+
+  /* ── Background overrides ── */
+  .bg-ink-950 { background-color: #f5f3ee !important; }
+  .bg-ink-900 { background-color: #efede8 !important; }
+  .bg-ink-850 { background-color: #e9e7e2 !important; }
+  .bg-ink-800 { background-color: #e3e1dc !important; }
+  .bg-ink-700 { background-color: #ddd9d4 !important; }
+  .bg-ink-600 { background-color: #d5d1cc !important; }
+
+  &[class*="bg-ink-"] { background-color: transparent; }
+
+  /* ── Border overrides ── */
+  [class*="border-white/"] { border-color: rgba(0, 0, 0, 0.08) !important; }
+  .border-white\/10, .border-white\/20,
+  [class*="border-white/\\["] { border-color: rgba(0, 0, 0, 0.08) !important; }
+  .border-accent\/30 { border-color: rgba(124, 92, 255, 0.2) !important; }
+  .border-accent\/40 { border-color: rgba(124, 92, 255, 0.3) !important; }
+  .border-flame\/40 { border-color: rgba(255, 122, 69, 0.3) !important; }
+
+  /* ── white-based backgrounds (glass, chips, inputs) ── */
+  [class*="bg-white/"] { background-color: rgba(0, 0, 0, 0.03) !important; }
+
+  /* ── Body ── */
+  body {
+    background-color: #f5f3ee;
+    color: #44403c;
+  }
+
+  /* ── Aurora backdrop — subtle in light ── */
+  body::before {
+    opacity: 0.3;
+    filter: saturate(0.6);
+  }
+
+  /* ── Grid overlay ── */
+  body::after {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px) !important;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 100%);
+  }
+
+  /* ── Base layer ── */
+  h1, h2, h3, h4, h5, h6 { color: #1c1917; }
+  p { color: #44403c; }
+
+  .serif-display { color: #1c1917; }
+
+  /* ── Glass surfaces ── */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.75) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow:
+      0 4px 24px -12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8) !important;
+  }
+  .glass-strong {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow:
+      0 8px 32px -16px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+  }
+
+  /* ── Gradient text ── */
+  .gradient-text {
+    background-image: linear-gradient(135deg, #4a3a7a 0%, #7c5cff 45%, #d94a7a 100%) !important;
+  }
+  .accent-text {
+    background-image: linear-gradient(135deg, #6a4adf, #e0458a) !important;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    box-shadow: 0 8px 24px -8px rgba(124, 92, 255, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 12px 32px -8px rgba(124, 92, 255, 0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .btn-ghost {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #292524 !important;
+  }
+  .btn-ghost:hover {
+    background-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* ── Inputs ── */
+  .input {
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #1c1917 !important;
+  }
+  .input:focus {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(124, 92, 255, 0.4) !important;
+  }
+  .input::placeholder { color: #a8a29e !important; }
+
+  /* ── Labels ── */
+  .label { color: #78716c !important; }
+
+  /* ── Chips ── */
+  .chip {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #57534e !important;
+  }
+
+  /* ── Progress bars ── */
+  [class*="bg-ink-"]:not([class*="bg-ink-950"]):not([class*="bg-ink-900"]) {
+    background-color: #e3e1dc !important;
+  }
+
+  /* ── Shadows ── */
+  .shadow-glow {
+    box-shadow: 0 4px 20px -4px rgba(124, 92, 255, 0.3) !important;
+  }
+
+  /* ── Top bar backdrop ── */
+  .backdrop-blur-lg.bg-ink-950\/80 {
+    background-color: rgba(245, 243, 238, 0.85) !important;
+  }
+  .backdrop-blur.bg-ink-950\/80 {
+    background-color: rgba(245, 243, 238, 0.85) !important;
+  }
+
+  /* ── Scollbar ── */
+  *::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.1) !important; }
+
+  /* ── Black overlay (modals) ── */
+  .bg-black\/60 { background-color: rgba(0, 0, 0, 0.4) !important; }
+
+  /* ── Focus timer overlay — always dark regardless of mode ── */
+  .focus-timer, .focus-timer * { --tw-text-opacity: 1; }
+  .focus-timer { background-color: #000 !important; }
+  .focus-timer .text-white { color: #fff !important; }
+  .focus-timer .text-slate-100 { color: #f5f5f4 !important; }
+  .focus-timer .text-slate-200 { color: #e7e5e4 !important; }
+  .focus-timer .text-slate-300 { color: #d6d3d1 !important; }
+  .focus-timer .text-slate-400 { color: #a8a29e !important; }
+  .focus-timer .text-slate-500 { color: #78716c !important; }
+  .focus-timer .btn-ghost { color: #fff !important; background-color: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.2) !important; }
+  .focus-timer .btn-ghost:hover { background-color: rgba(255,255,255,0.12) !important; }
+  .focus-timer .btn-primary { color: #fff !important; }
+  .focus-timer .glass { background-color: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; }
+  .focus-timer .input { color: #fff !important; background-color: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.12) !important; }
+  .focus-timer .input::placeholder { color: #a8a29e !important; }
+
+  /* ── Toast ── */
+  [class*="border-accent/30"] { border-color: rgba(124, 92, 255, 0.25) !important; }
+
+  /* ── Skeleton / spinner ── */
+  .border-accent { border-color: #7c5cff !important; }
+}
