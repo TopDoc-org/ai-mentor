@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Brand colours referenced by styles.xml. Zenamaze accent is violet #7c5cff. -->
+<resources>
+    <color name="colorPrimary">#7c5cff</color>
+    <color name="colorPrimaryDark">#08090d</color>
+    <color name="colorAccent">#b64dff</color>
+</resources>

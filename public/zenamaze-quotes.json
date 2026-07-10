@@ -1,0 +1,218 @@
+{
+  "source": "The ONE Thing — Gary Keller & Jay Papasan",
+  "note": "Motivational quotes drawn verbatim from The ONE Thing, tagged so the app can surface the right line at the right moment. theme = topical bucket; useWhen = app-moment triggers that map to existing signals (new goal, plan confirm, daily open, task done, streak, missed day, behind pace, comeback).",
+  "themes": ["focus", "priority", "starting", "persistence", "saying-no", "process", "leverage", "habit", "purpose"],
+  "triggers": ["new-goal", "confirm-plan", "daily-open", "task-done", "streak", "missed-day", "behind-pace", "comeback"],
+  "quotes": [
+    {
+      "id": "postage-stamp",
+      "text": "Be like a postage stamp — stick to one thing until you get there.",
+      "author": "Josh Billings",
+      "theme": "persistence",
+      "useWhen": ["new-goal", "daily-open", "streak"]
+    },
+    {
+      "id": "two-rabbits",
+      "text": "If you chase two rabbits, you will not catch either one.",
+      "author": "Russian proverb",
+      "theme": "focus",
+      "useWhen": ["new-goal", "behind-pace"]
+    },
+    {
+      "id": "one-thing-at-a-time",
+      "text": "It is those who concentrate on but one thing at a time who advance in this world.",
+      "author": "Og Mandino",
+      "theme": "focus",
+      "useWhen": ["daily-open", "confirm-plan"]
+    },
+    {
+      "id": "only-one-most-important",
+      "text": "There can only be one most important thing. Many things may be important, but only one can be the most important.",
+      "author": "Ross Garber",
+      "theme": "priority",
+      "useWhen": ["new-goal", "confirm-plan"]
+    },
+    {
+      "id": "single-minded",
+      "text": "You must be single-minded. Drive for the one thing on which you have decided.",
+      "author": "General George S. Patton",
+      "theme": "focus",
+      "useWhen": ["daily-open", "streak"]
+    },
+    {
+      "id": "singleness-of-purpose",
+      "text": "Success demands singleness of purpose.",
+      "author": "Vince Lombardi",
+      "theme": "purpose",
+      "useWhen": ["new-goal", "daily-open"]
+    },
+    {
+      "id": "eggs-one-basket",
+      "text": "Put all your eggs in one basket, and then watch that basket.",
+      "author": "Andrew Carnegie",
+      "theme": "focus",
+      "useWhen": ["confirm-plan", "behind-pace"]
+    },
+    {
+      "id": "secret-of-getting-started",
+      "text": "The secret of getting ahead is getting started. The secret to getting started is breaking your complex overwhelming tasks into small manageable tasks and then starting on the first one.",
+      "author": "Mark Twain",
+      "theme": "starting",
+      "useWhen": ["new-goal", "daily-open", "comeback"]
+    },
+    {
+      "id": "journey-one-step",
+      "text": "To get through the hardest journey we need take only one step at a time, but we must keep on stepping.",
+      "author": "Chinese proverb",
+      "theme": "persistence",
+      "useWhen": ["daily-open", "missed-day", "comeback"]
+    },
+    {
+      "id": "judge-by-questions",
+      "text": "Judge a man by his questions rather than his answers.",
+      "author": "Voltaire",
+      "theme": "process",
+      "useWhen": ["new-goal"]
+    },
+    {
+      "id": "prudent-question",
+      "text": "A prudent question is one-half of wisdom.",
+      "author": "Sir Francis Bacon",
+      "theme": "process",
+      "useWhen": ["new-goal"]
+    },
+    {
+      "id": "power-to-question",
+      "text": "The power to question is the basis of all human progress.",
+      "author": "Indira Gandhi",
+      "theme": "process",
+      "useWhen": ["new-goal"]
+    },
+    {
+      "id": "woulda-coulda-shoulda",
+      "text": "But those Woulda-Coulda-Shouldas all ran away and hid from one little Did.",
+      "author": "Shel Silverstein",
+      "theme": "starting",
+      "useWhen": ["daily-open", "missed-day"]
+    },
+    {
+      "id": "focusing-is-saying-no",
+      "text": "When you think about focusing, you think, 'Well, focusing is saying yes.' No! Focusing is about saying no.",
+      "author": "Steve Jobs",
+      "theme": "saying-no",
+      "useWhen": ["behind-pace", "daily-open"]
+    },
+    {
+      "id": "focus-what-not-to-do",
+      "text": "Focus is a matter of deciding what things you're not going to do.",
+      "author": "John Carmack",
+      "theme": "saying-no",
+      "useWhen": ["behind-pace", "confirm-plan"]
+    },
+    {
+      "id": "half-of-knowing",
+      "text": "One-half of knowing what you want is knowing what you must give up before you get it.",
+      "author": "Sidney Howard",
+      "theme": "saying-no",
+      "useWhen": ["confirm-plan"]
+    },
+    {
+      "id": "success-is-simple",
+      "text": "Success is simple. Do what's right, the right way, at the right time.",
+      "author": "Arnold H. Glasow",
+      "theme": "habit",
+      "useWhen": ["daily-open", "task-done"]
+    },
+    {
+      "id": "habits-decide-futures",
+      "text": "People do not decide their futures, they decide their habits and their habits decide their futures.",
+      "author": "F. M. Alexander",
+      "theme": "habit",
+      "useWhen": ["streak", "daily-open"]
+    },
+    {
+      "id": "matter-most-mercy",
+      "text": "Things which matter most must never be at the mercy of things which matter least.",
+      "author": "Johann Wolfgang von Goethe",
+      "theme": "priority",
+      "useWhen": ["behind-pace", "daily-open"]
+    },
+    {
+      "id": "clear-path-lesser-goal",
+      "text": "We are kept from our goal, not by obstacles but by a clear path to a lesser goal.",
+      "author": "Robert Brault",
+      "theme": "priority",
+      "useWhen": ["behind-pace", "missed-day"]
+    },
+    {
+      "id": "planning-future-into-present",
+      "text": "Planning is bringing the future into the present so that you can do something about it now.",
+      "author": "Alan Lakein",
+      "theme": "process",
+      "useWhen": ["confirm-plan", "new-goal"]
+    },
+    {
+      "id": "efficiency-vs-effectiveness",
+      "text": "Efficiency is doing the thing right. Effectiveness is doing the right thing.",
+      "author": "Peter Drucker",
+      "theme": "leverage",
+      "useWhen": ["daily-open", "behind-pace"]
+    },
+    {
+      "id": "multitasking-screw-up",
+      "text": "Multitasking is merely the opportunity to screw up more than one thing at a time.",
+      "author": "Steve Uzzell",
+      "theme": "focus",
+      "useWhen": ["behind-pace", "daily-open"]
+    },
+    {
+      "id": "risk-going-too-far",
+      "text": "Only those who will risk going too far can possibly find out how far one can go.",
+      "author": "T. S. Eliot",
+      "theme": "purpose",
+      "useWhen": ["new-goal", "streak"]
+    },
+    {
+      "id": "purpose-without-priority",
+      "text": "Purpose without priority is powerless.",
+      "author": "Gary Keller & Jay Papasan",
+      "theme": "priority",
+      "useWhen": ["new-goal", "confirm-plan"]
+    },
+    {
+      "id": "connect-today-tomorrows",
+      "text": "Connect today to all your tomorrows. It matters.",
+      "author": "Gary Keller & Jay Papasan",
+      "theme": "process",
+      "useWhen": ["daily-open", "confirm-plan"]
+    },
+    {
+      "id": "new-answer-new-behavior",
+      "text": "A new answer usually requires new behavior.",
+      "author": "Gary Keller & Jay Papasan",
+      "theme": "leverage",
+      "useWhen": ["confirm-plan", "comeback"]
+    },
+    {
+      "id": "levered-action",
+      "text": "If you want extraordinary results, look for the levered action that will start a domino run.",
+      "author": "Gary Keller & Jay Papasan",
+      "theme": "leverage",
+      "useWhen": ["confirm-plan", "daily-open"]
+    },
+    {
+      "id": "until-one-thing-done",
+      "text": "Until my ONE Thing is done — everything else is a distraction.",
+      "author": "Gary Keller & Jay Papasan",
+      "theme": "focus",
+      "useWhen": ["daily-open", "behind-pace"]
+    },
+    {
+      "id": "success-is-sequential",
+      "text": "Success is built sequentially. It's one thing at a time.",
+      "author": "Gary Keller & Jay Papasan",
+      "theme": "persistence",
+      "useWhen": ["streak", "task-done", "comeback"]
+    }
+  ]
+}

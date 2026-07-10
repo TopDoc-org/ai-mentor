@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Zenamaze</string>
+    <string name="title_activity_main">Zenamaze</string>
+    <string name="package_name">in.knocdoc.zenamaze</string>
+    <string name="custom_url_scheme">in.knocdoc.zenamaze</string>
+</resources>
