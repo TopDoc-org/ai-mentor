@@ -140,6 +140,31 @@ import { isBrowser } from '../../core/platform';
             <p class="fb mt-3 text-center text-sm text-[#0A332F]/60">
               Free · No sign-up · Type in any language — English · हिन्दी · Hinglish.
             </p>
+
+            <!-- Centred contact affordance, deliberately below the entry box: it is
+                 the fallback for someone the box did not serve, so it must not
+                 compete with the primary CTA above it. Anchored rather than a
+                 button — on mobile wa.me hands off to the installed app, and a real
+                 href is what makes long-press / open-in-new-tab work. Outlined in
+                 the page's teal rather than filled WhatsApp green for the same
+                 reason: only "Get started" gets a solid fill. -->
+            <div class="mt-10 flex flex-col items-center">
+              <p class="fb mb-3 text-center text-sm text-[#0A332F]/60">Not sure where to start?</p>
+              <a
+                [href]="whatsappHref"
+                target="_blank"
+                rel="noopener"
+                (click)="contactWhatsapp('centre')"
+                class="fb inline-flex items-center gap-2 rounded-xl border border-[#0D9488]/30 bg-white px-5 py-3 text-sm font-semibold text-[#0F766E] shadow-sm transition-colors hover:border-[#0D9488]/60 hover:bg-[#0D9488]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
+              >
+                <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-[#25D366]" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.21 8.21 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"
+                  />
+                </svg>
+                Contact us on WhatsApp
+              </a>
+            </div>
           </div>
         </section>
 
@@ -156,9 +181,19 @@ import { isBrowser } from '../../core/platform';
             DoctoGuide is operated by <strong class="font-semibold text-[#0A332F]/70">KnocDoc</strong>.
             Support:
             <a href="mailto:support&#64;knocdoc.in" class="text-[#0A332F]/50 underline hover:text-[#0F766E]">support&#64;knocdoc.in</a>
+            <span class="mx-1">·</span>
+            <a
+              [href]="whatsappHref"
+              target="_blank"
+              rel="noopener"
+              (click)="contactWhatsapp('foot')"
+              class="text-[#0A332F]/50 underline hover:text-[#0F766E]"
+              >WhatsApp</a
+            >
           </p>
         </footer>
       </main>
+
     </div>
   `,
 })
@@ -169,6 +204,23 @@ export class GuideComponent implements OnInit, OnDestroy {
 
   /** Where the funnel lands. */
   private static readonly TARGET = 'https://doctoguide.knocdoc.in/triage';
+
+  /**
+   * KnocDoc's WhatsApp business line, in wa.me form: country code + number,
+   * digits only, no `+`, spaces or dashes — wa.me silently fails on anything
+   * else rather than erroring, so it cannot be caught by a build.
+   *
+   * 91 = India country code, prepended to the 10-digit line.
+   */
+  private static readonly WHATSAPP = '919437975834';
+
+  /**
+   * Prefilled first message. It is rendered into the href, so the copy rule in
+   * the class comment applies to it exactly as it does to visible text: no
+   * condition, symptom, medicine or procedure vocabulary, in any language.
+   */
+  private static readonly WHATSAPP_TEXT =
+    'Hi KnocDoc — I have a question about DoctoGuide.';
 
   query = '';
   placeholder = '';
@@ -242,6 +294,18 @@ export class GuideComponent implements OnInit, OnDestroy {
     this.doc.head
       .querySelector('meta[property="og:site_name"]')
       ?.setAttribute('content', 'DoctoGuide');
+  }
+
+  /** wa.me deep link — opens the app on mobile, WhatsApp Web on desktop. */
+  get whatsappHref(): string {
+    return `https://wa.me/${GuideComponent.WHATSAPP}?text=${encodeURIComponent(
+      GuideComponent.WHATSAPP_TEXT,
+    )}`;
+  }
+
+  /** Logged separately from GuideCtaClick: this exits the funnel, not through it. */
+  contactWhatsapp(source: 'centre' | 'foot'): void {
+    this.analytics.logEvent(AnalyticsEvent.GuideWhatsappClick, { source });
   }
 
   /** Which CTA earned the click. */

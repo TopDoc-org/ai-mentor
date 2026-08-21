@@ -195,6 +195,12 @@ export class OnboardingHostComponent {
   view = computed<View>(() => {
     const step = this.onb.step();
     const onPath = (p: string) => this.url().split(/[?#]/)[0].startsWith(p);
+    // /guide is the DoctoGuide-branded outbound funnel (see app.routes.ts). It
+    // carries no Zenamaze chrome by design, so Pip must never surface there —
+    // a purple mascot introducing "Zenamaze" over a DoctoGuide page reads as a
+    // broken page to paid traffic. Suppress the view only: the step itself is
+    // untouched, so the guided run still picks up on the next Zenamaze screen.
+    if (onPath('/guide')) return null;
     switch (step) {
       case 'welcome': return 'welcome';
       // Guided run armed, still on the landing page → nudge toward the goal box.

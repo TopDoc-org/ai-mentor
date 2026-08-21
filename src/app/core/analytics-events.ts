@@ -43,6 +43,7 @@ export const AnalyticsEvent = {
 
   // Outbound funnel (/guide → DoctoGuide)
   GuideCtaClick: 'guide_cta_click', // params: { source, typed }
+  GuideWhatsappClick: 'guide_whatsapp_click', // param: { source }
 } as const;
 
 export type AnalyticsEventName =
