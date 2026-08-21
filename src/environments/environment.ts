@@ -5,7 +5,7 @@ export const environment = {
   // Base host of the backend. Mentor routes are mounted at /mentor (backend
   // path unchanged during the Zenamaze rebrand — see TopDoc-Backend).
   // LAN IP (not localhost) so a phone on the same WiFi can reach the backend.
-  serverUrl: 'https://backend.knocdoc.in',
+  serverUrl: 'http://localhost:3000',
   // Public web origin — used for canonical URLs, sitemap and OG/Twitter absolute
   // URLs.
   siteUrl: 'https://zenamaze.knocdoc.in',
