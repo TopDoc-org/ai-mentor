@@ -40,6 +40,9 @@ export const AnalyticsEvent = {
   OnboardingStep: 'onboarding_step', // per-beat funnel; param: { step }
   OnboardingComplete: 'onboarding_complete',
   OnboardingSkip: 'onboarding_skip', // param: { step } — where they bailed
+
+  // Outbound funnel (/guide → DoctoGuide)
+  GuideCtaClick: 'guide_cta_click', // params: { source, typed }
 } as const;
 
 export type AnalyticsEventName =
