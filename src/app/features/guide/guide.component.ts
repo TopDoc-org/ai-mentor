@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { SeoService } from '../../core/seo.service';
 import { AnalyticsService } from '../../core/analytics.service';
 import { AnalyticsEvent } from '../../core/analytics-events';
@@ -8,7 +7,8 @@ import { isBrowser } from '../../core/platform';
 
 /**
  * Outbound funnel landing page (`/guide`). Carries DoctoGuide branding only and
- * hands the visitor straight to DoctoGuide with whatever they typed.
+ * hands the visitor straight to DoctoGuide. Every control on the page, the
+ * entry box included, is a single exit: nothing is collected here.
  *
  * Two constraints on this file, both deliberate:
  *
@@ -33,7 +33,6 @@ import { isBrowser } from '../../core/platform';
 @Component({
   selector: 'app-guide',
   standalone: true,
-  imports: [FormsModule],
   styles: [
     `
       /* Only the weights this page actually paints: Outfit 800 (wordmark),
@@ -106,8 +105,9 @@ import { isBrowser } from '../../core/platform';
             then shows you listings near you. No sign-up, no card.
           </p>
 
-          <!-- Entry box. Free text is handed to DoctoGuide as \`q\`. Read the copy
-               rule in the class comment above before editing any string here. -->
+          <!-- Entry box in appearance only - it collects nothing and every
+               interaction with it exits to DoctoGuide. Read the copy rule in the
+               class comment above before editing any string here. -->
           <div class="mx-auto mt-8 w-full max-w-xl">
             <p class="fb mb-2.5 text-center text-sm font-semibold text-[#0A332F]">What are you looking for?</p>
             <div class="flex flex-col gap-2 rounded-2xl bg-white p-2 shadow-lg ring-1 ring-black/5 sm:flex-row sm:items-center">
@@ -117,12 +117,20 @@ import { isBrowser } from '../../core/platform';
                 <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-[#14B8A6]" fill="currentColor" aria-hidden="true">
                   <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
                 </svg>
+                <!-- Not an entry field despite looking like one: typing happens on
+                     DoctoGuide itself, so any attempt to interact with the box -
+                     pointer, focus or Enter - exits straight to the funnel. Kept
+                     as an <input> so the running placeholder still reads as a
+                     prompt; the readonly attribute stops the mobile keyboard
+                     opening in the instant before the navigation lands. -->
                 <input
-                  [(ngModel)]="query"
+                  readonly
+                  (mousedown)="start('hero')"
+                  (focus)="start('hero')"
                   (keyup.enter)="start('hero')"
                   [placeholder]="placeholder"
                   aria-label="Tell us what you are looking for"
-                  class="fb h-12 w-full bg-transparent text-base text-[#0A332F] outline-none placeholder:text-[#0A332F]/40"
+                  class="fb h-12 w-full cursor-pointer bg-transparent text-base text-[#0A332F] outline-none placeholder:text-[#0A332F]/40"
                 />
               </div>
               <button
@@ -222,7 +230,6 @@ export class GuideComponent implements OnInit, OnDestroy {
   private static readonly WHATSAPP_TEXT =
     'Hi KnocDoc — I have a question about DoctoGuide.';
 
-  query = '';
   placeholder = '';
 
   /**
@@ -308,15 +315,15 @@ export class GuideComponent implements OnInit, OnDestroy {
     this.analytics.logEvent(AnalyticsEvent.GuideWhatsappClick, { source });
   }
 
-  /** Which CTA earned the click. */
+  /**
+   * Which CTA earned the click. Nothing is typed on this page any more, so no
+   * `q` is forwarded - the visitor states their need on DoctoGuide itself.
+   */
   start(source: 'hero' | 'foot'): void {
-    const q = (this.query || '').trim();
-    this.analytics.logEvent(AnalyticsEvent.GuideCtaClick, { source, typed: q ? 1 : 0 });
+    this.analytics.logEvent(AnalyticsEvent.GuideCtaClick, { source, typed: 0 });
     if (!isBrowser) return;
     // Same tab: a funnel should not leave an orphan tab behind.
-    window.location.href = q
-      ? `${GuideComponent.TARGET}?q=${encodeURIComponent(q)}`
-      : GuideComponent.TARGET;
+    window.location.href = GuideComponent.TARGET;
   }
 
   // Typewriter for the input placeholder: type a use-case, pause, erase, next.
