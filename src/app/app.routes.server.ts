@@ -15,6 +15,10 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'help', renderMode: RenderMode.Prerender },
   { path: 'disclaimer', renderMode: RenderMode.Prerender },
   { path: 'cookies', renderMode: RenderMode.Prerender },
+  // Outbound funnel page. Prerendered because there is no hosting rewrite config
+  // in this repo: a cold ad click on /guide resolves only if the build emits
+  // dist/web/browser/guide/index.html.
+  { path: 'guide', renderMode: RenderMode.Prerender },
   // Auth-gated + parameterised routes: client-side render only.
   { path: '**', renderMode: RenderMode.Client },
 ];

@@ -167,5 +167,14 @@ export const routes: Routes = [
     canDeactivate: [unsavedChangesGuard],
     loadComponent: () => import('./features/plan/plan.component').then((m) => m.PlanComponent),
   },
+  // Outbound funnel to DoctoGuide. DoctoGuide-branded, noindex, and deliberately
+  // unguarded — guestOnlyGuard would bounce a logged-in visitor to /dashboard,
+  // and paid traffic must always land. Title carries no `· Zenamaze` suffix on
+  // purpose: it would show in the browser tab of a DoctoGuide-branded page.
+  {
+    path: 'guide',
+    title: 'DoctoGuide by KnocDoc — Know Who to Book',
+    loadComponent: () => import('./features/guide/guide.component').then((m) => m.GuideComponent),
+  },
   { path: '**', redirectTo: '' },
 ];
